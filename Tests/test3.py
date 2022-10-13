@@ -1,15 +1,9 @@
+""" TEST 3"""
 import numpy as np
-
 import classification
 import data_extraction
 import pickle
-from CNN_classification import model_classifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.feature_selection import mutual_info_classif, SelectKBest
-from sklearn.preprocessing import RobustScaler
 from tpot import TPOTClassifier
-from xgboost import XGBClassifier
 
 # PATH OF FILE GDF AND CAP
 path_2a = 'C:/Users/anto-/PycharmProjects/Project Motor Imagery/BCICIV_2a_gdf'
@@ -25,11 +19,9 @@ channels_drop_2a = ['EOG_1', 'EOG_0', 'EOG_2', 'EEG-Fz', 'EEG-0', 'EEG-1', 'EEG-
                     'EEG-16', 'EEG-Pz']
 channels_drop_2b = ['EOG_1', 'EOG_0', 'EOG_2']
 
-all_feature = ['app_entropy', 'decorr_time',
-               'energy_freq_bands', 'higuchi_fd',
-               'hjorth_complexity', 'hjorth_complexity_spect',
+all_feature = ['energy_freq_bands','hjorth_complexity', 'hjorth_complexity_spect',
                'hjorth_mobility', 'hjorth_mobility_spect',
-               'hurst_exp', 'katz_fd', 'kurtosis',
+               'hurst_exp',  'kurtosis',
                'line_length', 'mean', 'pow_freq_bands',
                'ptp_amp', 'quantile', 'rms', 'samp_entropy',
                'skewness', 'spect_edge_freq', 'spect_entropy',
@@ -48,8 +40,8 @@ for k in index:
         temp.append(all_feature[value])
     feature_array.append(temp)
 
-raw_file_train_2a = pickle.load(open("C:/Users/anto-/PycharmProjects/Project Motor Imagery/Data_Raw/raw_2a.dat", "rb"))
-raw_file_train_2b = pickle.load(open("C:/Users/anto-/PycharmProjects/Project Motor Imagery/Data_Raw/raw_2b.dat", "rb"))
+raw_file_train_2a = pickle.load(open("C:/Users/anto-/PycharmProjects/AIML_Project/Data_Raw/raw_2a.dat", "rb"))
+raw_file_train_2b = pickle.load(open("C:/Users/anto-/PycharmProjects/AIML_Project/Data_Raw/raw_2b.dat", "rb"))
 
 '######################################################################################################################'
 ''' DATA EXTRACTION + PREPROCESSING '''
@@ -89,7 +81,7 @@ for feature in feature_array:
     X_temp, Y_temp = feature_extraction.extraction_CSP_FE(X, Y, 2, feature)
 
     TPot = TPOTClassifier(generations=50,
-                          population_size=50, subsample=0.9,
+                          population_size=50, subsample=0.7,
                           cv=10,
                           verbosity=2,
                           random_state=42,
@@ -103,4 +95,4 @@ for feature in feature_array:
 
 import pandas as pd
 df = pd.DataFrame.from_dict(result_feature)
-df.to_excel('feature_result.xlsx')
+df.to_excel('../File Excel/test_3.xlsx')

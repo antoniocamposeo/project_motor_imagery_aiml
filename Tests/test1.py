@@ -1,20 +1,10 @@
 import numpy as np
-import CNN_models
 import data_extraction
-import feature_extraction
-import result
-import utils
 import classification
 import pickle
 import feature_extraction
-
-from CNN_classification import model_classifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.feature_selection import mutual_info_classif, SelectKBest
 from sklearn.preprocessing import RobustScaler
-from tpot import TPOTClassifier
-from xgboost import XGBClassifier
 
 # PATH OF FILE GDF AND CAP
 path_2a = 'C:/Users/anto-/PycharmProjects/Project Motor Imagery/BCICIV_2a_gdf'
